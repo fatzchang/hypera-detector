@@ -1,0 +1,27 @@
+{
+    "name": "Hypera Detector",
+    "description": "Detect m3u8 response, and cooperate with Hypera app",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "icons": {
+        "16": "logo192.png",
+        "48": "logo192.png",
+        "128": "logo192.png"
+    },
+    "background": {
+        "service_worker": "./background_script.js"
+    },
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Hypera Detector"
+    },
+    "permissions": [
+        "tabs",
+        "scripting",
+        "storage"
+    ],
+    "host_permissions": [
+        "http://*/*", 
+        "https://*/*"
+    ]
+}
