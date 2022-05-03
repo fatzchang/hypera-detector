@@ -4,9 +4,9 @@
     "version": "0.1.0",
     "manifest_version": 3,
     "icons": {
-        "16": "logo192.png",
-        "48": "logo192.png",
-        "128": "logo192.png"
+        "16": "logo.jpg",
+        "48": "logo.jpg",
+        "128": "logo.jpg"
     },
     "background": {
         "service_worker": "./background_script.js"
@@ -18,7 +18,8 @@
     "permissions": [
         "tabs",
         "scripting",
-        "storage"
+        "storage",
+        "webRequest"
     ],
     "host_permissions": [
         "http://*/*", 
