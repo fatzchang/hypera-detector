@@ -1,0 +1,1 @@
+# Hypera Detector
