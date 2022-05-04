@@ -7,28 +7,29 @@ const wsState = {
 
 wsList = {}; // group by tabid
 
-const sleep = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 
 chrome.tabs.onCreated.addListener((tab) => {
   console.log('tab is created!');
   const videoList = {};
-  let ws = wsList[tab.id];
 
-  const tryConnect = async () => {
-    while (!ws || ws.readyState !== wsState.OPEN) {
-      console.log('try connecting...');
-      ws = new WebSocket('ws://localhost:49367/ws');
-      wsList[tab.id] = ws;
-      await sleep(5000);
+  const tryConnect = () => {  
+    console.log(tab.id, 'trying connect...');
+    wsList[tab.id] = new WebSocket('ws://localhost:49367/ws'),
+
+    wsList[tab.id].onopen = () => {
+      console.log('connected!');
     }
-    
-    console.log('connected!');
-  
-    ws.onclose = () => {
+
+    wsList[tab.id].onclose = () => {
       console.log('disconnected!');
-      tryConnect();
+    };
+
+    wsList[tab.id].onerror = () => {
+      console.log('error!');
+      if (wsList[tab.id]) {
+        tryConnect();
+      }
     };
   }
 
@@ -37,6 +38,7 @@ chrome.tabs.onCreated.addListener((tab) => {
   // this api is asynchronous
   chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
+      let ws = wsList[tab.id];
       if (ws && ws.readyState === wsState.OPEN) {
         if (!videoList[details.url] && details.url.includes('m3u8')) {
           videoList[details.url] = true;
@@ -55,9 +57,8 @@ chrome.tabs.onCreated.addListener((tab) => {
 
 
 chrome.tabs.onRemoved.addListener((tabId) => {
-  const ws = wsList[tabId];
-  if (ws) {
-    ws.close();
+  if (wsList[tabId]) {
+    wsList[tabId].close();
     delete wsList[tabId];
   }
 });
