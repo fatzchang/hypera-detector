@@ -16,11 +16,11 @@
         "default_title": "Hypera Detector"
     },
     "permissions": [
+        "scripting",
         "tabs",
         "webRequest"
     ],
     "host_permissions": [
-        "http://*/*", 
-        "https://*/*"
+        "<all_urls>"
     ]
 }
