@@ -1,16 +1,19 @@
 class HyperaWebSocketClient {
   // class static variables
+  static MAX_RECONNECT_ATTEMPT = 5;
   static list = {};
-  static wsState = {
+  static WS_STATE = {
     CONNECTING: 0,
     OPEN: 1,
     CLOSING: 2,
     CLOSED: 3
   }
 
-  // instance variables
   ws = null;
   identifier = '';
+
+  // initialize max attempt times
+  remainedAttempts = HyperaWebSocketClient.MAX_RECONNECT_ATTEMPT;
 
   constructor(identifier) {
     this.identifier = identifier;
@@ -22,7 +25,7 @@ class HyperaWebSocketClient {
 
   // public method
   isReady() {
-    return this.ws && this.ws.readyState === HyperaWebSocketClient.wsState.OPEN;
+    return this.ws && this.ws.readyState === HyperaWebSocketClient.WS_STATE.OPEN;
   }
 
   sendData(data) {
@@ -69,8 +72,9 @@ class HyperaWebSocketClient {
     this.ws.onerror = () => {
       console.log('error!');
 
-      if (this.ws) {
-        _tryConnect();
+      if (this.ws && this.remainedAttempts > 0) {
+        this._tryConnect();
+        this.remainedAttempts--;
       }
     };
   }
