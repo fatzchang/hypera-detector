@@ -11,7 +11,6 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: 'src/manifest.json', to: '[name][ext]' },
-        { from: 'src/background_script.js', to: '[name][ext]' },
         { from: 'assets/*', to: '[name][ext]' }
       ]
     }),

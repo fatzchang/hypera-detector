@@ -9,7 +9,7 @@
         "128": "logo.jpg"
     },
     "background": {
-        "service_worker": "./background_script.js"
+        "service_worker": "./worker.bundle.js"
     },
     "action": {
         "default_popup": "index.html",

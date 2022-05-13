@@ -6,7 +6,7 @@ const distPath = path.resolve(__dirname, '../dist')
 module.exports = {
   entry: {
     popup: path.resolve(srcPath, "./popup/popup.js"),
-    // options: path.resolve(srcPath, "./src/index-options.js"),
+    worker: path.resolve(srcPath, "./serviceWorker/worker.js"),
   },
   output: {
     filename: '[name].bundle.js',
