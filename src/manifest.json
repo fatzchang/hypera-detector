@@ -12,7 +12,7 @@
         "service_worker": "./worker.bundle.js"
     },
     "action": {
-        "default_popup": "index.html",
+        "default_popup": "popup.html",
         "default_title": "Hypera Detector"
     },
     "permissions": [
