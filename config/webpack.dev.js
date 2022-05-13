@@ -1,14 +1,14 @@
 const config = require("./webpack.core");
-const path = require('path');
 
 module.exports = {
   ...config,
   mode: 'development',
   devServer: {
     static: {
-      directory: path.join(__dirname, './src'),
+      directory: 'dist',
+      publicPath: 'http://localhost:3000/dist' //will be used to determine where the bundles should be served from and takes precedence.
     },
-    historyApiFallback: true
+    port: 3000,
+    // historyApiFallback: true,
   }
 }
-  
