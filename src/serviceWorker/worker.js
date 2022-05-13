@@ -1,4 +1,7 @@
 import HyperaWebSocketClient from './wsClient';
+import { keepAlive } from './sorcery';
+
+keepAlive();
 
 chrome.tabs.onCreated.addListener((tab) => {
   console.log('tab is created!');
