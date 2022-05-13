@@ -1,4 +1,5 @@
 import HyperaWebSocketClient from './libs/wsClient';
+import setCommunicator from './injectScipts/port';
 import { keepAlive } from './libs/sorcery';
 
 keepAlive();
@@ -33,3 +34,22 @@ chrome.tabs.onCreated.addListener((tab) => {
 chrome.tabs.onRemoved.addListener((tabId) => {
   HyperaWebSocketClient.remove(tabId);
 });
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete' && tab.url.includes('http')) {
+    chrome.scripting.executeScript({
+        target: {tabId: tabId},
+        func: setCommunicator,
+      }, (injectResults) => {
+        console.log(injectResults)
+      }
+    );
+  }
+})
+
+chrome.runtime.onConnect.addListener((port) => {
+  port.onMessage.addListener((message) => {
+    console.log('Hiiii!', message);
+    // store port in filesystem
+  })
+})
